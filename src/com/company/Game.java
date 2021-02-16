@@ -38,6 +38,7 @@ public class Game {
 
                         case 1:
                             //Buy Food
+                            Store.BuyFood(myPlayers[j]);
                             break;
 
                         case 2:
