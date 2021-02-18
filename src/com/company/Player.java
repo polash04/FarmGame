@@ -7,7 +7,7 @@ public class Player {
     List<Animal> Animals = new ArrayList<Animal>();
     public int[] Food = new int[3];
 
-    public void DisplayInfo(){
+    public void DisplayInfo() {
         //Displays all Animals the player currently own
         System.out.println("Current Animals:");
         for (int i = 0; i < Animals.size(); i++) {
@@ -19,7 +19,7 @@ public class Player {
             System.out.println("    Estimated Value: " + Animals.get(i).GetValue() + " Schmeckles"); //Animal Estimated Value (Based on age)
         }
         //If the player has no animals
-        if(Animals.size() == 0)
+        if (Animals.size() == 0)
             System.out.println("    None");
 
         //Displays owned food
@@ -32,5 +32,17 @@ public class Player {
         System.out.println("Money: " + Money + " Schmeckles");
 
         System.out.println();
+    }
+
+    public void DisplayAnimalsIndexed() {
+        //Display all animals with an index
+        for (int i = 0; i < Animals.size(); i++) {
+            System.out.println("[" + (i + 1) + "]" + Animals.get(i).myName + ":"); //Animal Name
+            System.out.println("    Health: " + Animals.get(i).myHealth + "%"); //Animal Health
+            System.out.println("    Type: " + Animals.get(i).getClass().getSimpleName());//Animal Type
+            System.out.println("    Gender: " + Animals.get(i).myGender.toString());//Animal Gender
+            System.out.println("    Age: " + Animals.get(i).myAge + " Turns/" + Animals.get(i).myMaxAge + " Turns"); //Animal Age
+            System.out.println("    Estimated Value: " + Animals.get(i).GetValue() + " Schmeckles"); //Animal Estimated Value (Based on age)
+        }
     }
 }

@@ -39,7 +39,7 @@ public class Store {
                     if (!CanAfford(aPlayer, Chicken.Cost))
                         break;
 
-                    tempAnimal = new Chicken();
+                    tempAnimal = new Chicken(false);
                     System.out.println("-" + Chicken.Cost + " Schmeckles");
                     aPlayer.Money -= Chicken.Cost;
                     break;
@@ -47,7 +47,7 @@ public class Store {
                     if (!CanAfford(aPlayer, Cow.Cost))
                         break;
 
-                    tempAnimal = new Cow();
+                    tempAnimal = new Cow(false);
                     System.out.println("-" + Cow.Cost + " Schmeckles");
                     aPlayer.Money -= Cow.Cost;
                     break;
@@ -55,7 +55,7 @@ public class Store {
                     if (!CanAfford(aPlayer, Pig.Cost))
                         break;
 
-                    tempAnimal = new Pig();
+                    tempAnimal = new Pig(false);
                     System.out.println("-" + Pig.Cost + " Schmeckles");
                     aPlayer.Money -= Pig.Cost;
                     break;
@@ -63,7 +63,7 @@ public class Store {
                     if (!CanAfford(aPlayer, Sheep.Cost))
                         break;
 
-                    tempAnimal = new Sheep();
+                    tempAnimal = new Sheep(false);
                     System.out.println("-" + Sheep.Cost + " Schmeckles");
                     aPlayer.Money -= Sheep.Cost;
                     break;
@@ -71,7 +71,7 @@ public class Store {
                     if (!CanAfford(aPlayer, Horse.Cost))
                         break;
 
-                    tempAnimal = new Horse();
+                    tempAnimal = new Horse(false);
                     System.out.println("-" + Horse.Cost + " Schmeckles");
                     aPlayer.Money -= Horse.Cost;
                     break;
@@ -147,43 +147,25 @@ public class Store {
             //print how much money the player has
             System.out.println("Money: " + aPlayer.Money + " Schmeckles");
 
-            //Display all animals with an index
-            for (int i = 0; i < aPlayer.Animals.size(); i++) {
-                System.out.println("[" + (i + 1) + "]" + aPlayer.Animals.get(i).myName + ":"); //Animal Name
-                System.out.println("    Health: " + aPlayer.Animals.get(i).myHealth + "%"); //Animal Health
-                System.out.println("    Type: " + aPlayer.Animals.get(i).getClass().getSimpleName());//Animal Type
-                System.out.println("    Gender: " + aPlayer.Animals.get(i).myGender.toString());//Animal Gender
-                System.out.println("    Age: " + aPlayer.Animals.get(i).myAge + " Turns/" + aPlayer.Animals.get(i).myMaxAge + " Turns"); //Animal Age
-                System.out.println("    Estimated Value: " + aPlayer.Animals.get(i).GetValue() + " Schmeckles"); //Animal Estimated Value (Based on age)
-            }
-
-            //If the player has no animals
-            if(aPlayer.Animals.size() == 0){
+            //If the player has no animals print this
+            if (aPlayer.Animals.size() == 0) {
                 System.out.println("You have no animals to sell...");
             }
 
-            //Print the done option with the appropriate number
-            System.out.println("[" + (aPlayer.Animals.size() + 1) + "]" + "Done");
-            //Get an answer between the bounds
-            int tempAnswer = Utility.GetIntBetween(1, aPlayer.Animals.size() + 1);
+            //Let the player choose an animal to sell
+            int tempAnswer = Utility.ChooseAnimal(aPlayer, true);
 
             //If "Done" was chosen
-            if (tempAnswer == aPlayer.Animals.size() + 1) {
+            if (tempAnswer == aPlayer.Animals.size()) {
                 return;
             }
 
-            //Make sure the player didn't make a wrong input by accident
-            System.out.println("Are you sure you want to sell " + aPlayer.Animals.get(tempAnswer- 1).myName);
-            //If answer is yes
-            if (Utility.GiveOptions("Yes", "No") == 0) {
-                //Give the player and display how much
-                System.out.println("+" + aPlayer.Animals.get(tempAnswer - 1).GetValue() + " Schmeckles");
-                aPlayer.Money += aPlayer.Animals.get(tempAnswer - 1).GetValue();
+            //Give the player the money and display how much was gained
+            System.out.println("+" + aPlayer.Animals.get(tempAnswer).GetValue() + " Schmeckles");
+            aPlayer.Money += aPlayer.Animals.get(tempAnswer).GetValue();
 
-                //Remove the animal from the player and make sure
-                if (aPlayer.Animals.size() >= 0)
-                    aPlayer.Animals.remove(tempAnswer - 1);
-            }
+            //Remove the animal from the player
+            aPlayer.Animals.remove(tempAnswer);
         }
 
 
