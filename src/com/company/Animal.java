@@ -35,7 +35,7 @@ public abstract class Animal {
         }
 
 
-        //Prompts the playe rto choose a name and make sure the player didn't input the wrong name
+        //Prompts the player to choose a name and make sure the player didn't input the wrong name
         boolean tempNameConfirmedFlag = false;
         do{
             System.out.print("Please enter a name: ");
@@ -52,17 +52,22 @@ public abstract class Animal {
         }while(!tempNameConfirmedFlag);
     }
 
-    public void SetName(String aName){
-        myName = aName;
-    }
-
-    public void Update(){
+    public boolean Update(Player aPlayer){
         myHealth -= myRng.nextInt(31-10) + 10; // 31 is max bound 10 is lower bound
+
         myAge++;
+        //if age is above max age remove the animal from the player
+        if(myAge > myMaxAge) {
+                aPlayer.Animals.remove(this);
+                return true;
+        }
+        return false;
+
     }
     public int GetValue(){
-        // Calculates the current cost of the animal, decreases to a minimum of 20% of the base cost depending on the current age of the animal
-        return (int)(myCost * ( Math.max(1-(myAge/myMaxAge), 0.2f)));
+        // Calculates the current cost of the animal, decreases to a minimum of 20% of the base cost depending on the current age of the also multiplies by health
+        //Health casted to float to prevent integer multiplication
+        return (int)(myCost * ((float)myHealth/100f) * ( Math.max(1-((float)myAge/(float)myMaxAge), 0.2f)));
     }
 
 }

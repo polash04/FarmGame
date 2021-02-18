@@ -16,7 +16,7 @@ public class Player {
             System.out.println("    Type: " + Animals.get(i).getClass().getSimpleName());//Animal Type
             System.out.println("    Gender: " + Animals.get(i).myGender.toString());//Animal Gender
             System.out.println("    Age: " + Animals.get(i).myAge + " Turns/" + Animals.get(i).myMaxAge + " Turns"); //Animal Age
-            System.out.println("    Estimated Value: " + Animals.get(i).GetValue()); //Animal Estimated Value (Based on age)
+            System.out.println("    Estimated Value: " + Animals.get(i).GetValue() + " Schmeckles"); //Animal Estimated Value (Based on age)
         }
         //If the player has no animals
         if(Animals.size() == 0)
