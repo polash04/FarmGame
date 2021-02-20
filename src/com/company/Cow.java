@@ -7,6 +7,7 @@ public class Cow extends Animal{
         myCost = Cost;
         myMaxAge = 12;
         BabyCount = 3;
+        FoodTypes =  new FoodType[]{FoodType.Silage, FoodType.Carrots};
     }
 }
 

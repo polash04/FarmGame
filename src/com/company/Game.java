@@ -3,6 +3,7 @@ package com.company;
 import jdk.jshell.execution.Util;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 import java.util.Random;
 
 public class Game {
@@ -70,6 +71,7 @@ public class Game {
             }
             //Update at the end of each round
             Update();
+            System.out.println("Turn passed...");
         }
 
     }
@@ -120,12 +122,57 @@ public class Game {
     }
 
     void FeedAnimals(Player aPlayer) {
-        //Not implemented
+        //Loop forever
+        while(true){
+            //Display owned food
+            aPlayer.DisplayFood();
+            System.out.println("Which animal do you want to feed?");
+            //display owned animals with index
+            aPlayer.DisplayAnimalsIndexed();
+            //Print done option
+            System.out.println("[" + (aPlayer.Animals.size() + 1) + "]" + "Done");
+
+            //Get an answer between the bounds
+            int tempAnswer = Utility.GetIntBetween(1, aPlayer.Animals.size() +1) - 1;
+            //Check if "Done" was selected
+            if (tempAnswer == aPlayer.Animals.size())
+                return;
+            //Save the animal in a variable
+            Animal tempAnimal = aPlayer.Animals.get(tempAnswer);
+            System.out.println("What do you want to feed " + tempAnimal.myName);
+
+            //Print allowed food type options
+            for (int i = 0 ; i < tempAnimal.FoodTypes.length; i++){
+                System.out.println("[" +(i+1) + "]" + tempAnimal.FoodTypes[i].toString() + "(you have " + aPlayer.Food[tempAnimal.FoodTypes[i].getValue()] + "Kg)");
+            }
+            //Get an answer between the bounds
+            tempAnswer = Utility.GetIntBetween(1, tempAnimal.FoodTypes.length +1) - 1;
+            //save the food type in a variable
+            FoodType tempFoodType = tempAnimal.FoodTypes[tempAnswer];
+
+            //Ask how much player wants to feed
+            System.out.println("How many Kg of " + tempFoodType.toString() + " do you want to feed " + tempAnimal.myName + "?");
+            System.out.println("You have " + aPlayer.Food[tempFoodType.getValue()] + " Kg of this food type.");
+            //Get an answer
+            tempAnswer = Utility.GetIntBetween(0,aPlayer.Food[tempFoodType.getValue()]);
+
+            //Display effect
+            tempAnimal.myHealth += tempAnswer * 10;
+            //make sure the animal cant have more than 100% health
+            if(tempAnimal.myHealth >100)
+                tempAnimal.myHealth = 100;
+
+            System.out.println("You fed " + tempAnimal.myName + " " + tempAnswer + "Kg of " + tempFoodType.toString() + "(+" + (tempAnswer * 10) + "% health)");
+            System.out.println("-" + tempAnswer + "Kg of " + tempFoodType.toString());
+            aPlayer.Food[tempFoodType.getValue()] -= tempAnswer;
+        }
+
     }
 
     void Update() {
         //loop through all players and update all animals the player owns
         for (int i = 0; i < myPlayers.length; i++) {
+            System.out.println("Player " + (i+1) + ":");
             for (int j = 0; j < myPlayers[i].Animals.size(); j++) {
                 //If the animal dies, print what animal died
                 if (myPlayers[i].Animals.get(j).Update(myPlayers[i])) {
