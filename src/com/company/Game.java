@@ -5,6 +5,7 @@ import jdk.jshell.execution.Util;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class Game {
     Player[] myPlayers;
@@ -29,6 +30,10 @@ public class Game {
 
             //Loop through all players each round
             for (int j = 0; j < myPlayers.length; j++) {
+                //if player is bankrupt, skip that player
+                if(myPlayers[j].Bankrupt)
+                    continue;
+
                 //Print which player is playing right now
                 System.out.println("Player " + (j + 1) + ":");
 
@@ -71,8 +76,61 @@ public class Game {
             }
             //Update at the end of each round
             Update();
-            System.out.println("Turn passed...");
+            System.out.println("Turn passed... (" + (i +1) + "/" + tempRoundCount + ")");
+
+            //Check if a player has gone bankrupt
+            for(int j = 0; j < myPlayers.length; j++){
+                if(myPlayers[j].Money < 100 && myPlayers[j].Animals.size() == 0){
+                    System.out.println("Player " + (j+1) + " has gone bankrupt...");
+                    myPlayers[i].Bankrupt = true;
+                }
+            }
+
         }
+        System.out.println("The game has ended, all animals have been sold...");
+        //Sell all animals
+        for(int i = 0; i < myPlayers.length; i++){
+            for(int j = 0; j<myPlayers[i].Animals.size(); j++){
+                myPlayers[i].Money += myPlayers[i].Animals.get(j).GetValue();
+            }
+        }
+        System.out.print("The winner is");
+        //Add suspense by waiting 1 second between each dot
+        for(int i = 0; i < 3; i++){
+            System.out.print(".");
+            try
+            {
+                //Pause current thread for 1000 milliseconds
+                Thread.sleep(1000);
+            }
+            //To use Thread.Sleep you have to catch InterruptedException
+            catch(InterruptedException ex)
+            {
+                Thread.currentThread().interrupt();
+            }
+        }
+        //Determine winner
+        int tempWinner = -1;
+        int tempHighestSum = 0;
+        for(int i = 0; i < myPlayers.length; i++){
+            if(myPlayers[i].Money > tempHighestSum){
+                tempWinner = i;
+                tempHighestSum = myPlayers[i].Money;
+            }
+        }
+        //Display winner
+        System.out.println("Player " + (tempWinner + 1) + " with " + myPlayers[tempWinner].Money + "Schmeckles!");
+        System.out.println("Congratulations!!");
+
+        //print the rest of the player's money
+        for(int i = 0; i < myPlayers.length; i++){
+            if(i == tempWinner)
+            {
+                continue;
+            }
+            System.out.println("Player " + (i+1) + " money: " + myPlayers[i].Money);
+        }
+
 
     }
 

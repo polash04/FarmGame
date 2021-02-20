@@ -3,9 +3,10 @@ package com.company;
 import java.util.*;
 
 public class Player {
-    int Money = 1000;
+    int Money = 5000;
     List<Animal> Animals = new ArrayList<Animal>();
     public int[] Food = new int[3];
+    public boolean Bankrupt = false;
 
     public void DisplayInfo() {
         //Displays all Animals the player currently own
