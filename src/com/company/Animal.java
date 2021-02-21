@@ -100,7 +100,7 @@ public abstract class Animal {
 
         myAge++;
         //if age is above max age remove the animal from the player
-        if (myAge > myMaxAge) {
+        if (myAge > myMaxAge || myHealth <= 0) {
             aPlayer.Animals.remove(this);
             System.out.println("    " + myName + " Died...");
             return true;

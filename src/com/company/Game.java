@@ -25,13 +25,12 @@ public class Game {
         //Create the players
         for (int i = 0; i < myPlayers.length; i++) {
             myPlayers[i] = new Player();
-            System.out.print("Please choose a name:");
+            System.out.print("Please choose a name: ");
             myPlayers[i].Name = tempScan.next();
         }
 
         //Loop [number of rounds] times
         for (int i = 0; i < tempRoundCount; i++) {
-
             //Loop through all players each round
             for (int j = 0; j < myPlayers.length; j++) {
                 //if player is bankrupt, skip that player
@@ -124,7 +123,7 @@ public class Game {
             }
         }
         //Display winner
-        System.out.println(myPlayers[tempWinner].Name + (tempWinner + 1) + " with " + myPlayers[tempWinner].Money + "Schmeckles!");
+        System.out.println(myPlayers[tempWinner].Name + " with " + myPlayers[tempWinner].Money + "Schmeckles!");
         System.out.println("Congratulations!!");
 
         //print the rest of the player's money
@@ -177,7 +176,7 @@ public class Game {
                 } else { // if the animals didn't make a baby
                     System.out.println("The animals mated but didn't make any babies...");
                 }
-                return true; //return tru to continue to next turn
+                return true; //return true to continue to next turn
             }
         }
 
