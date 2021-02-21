@@ -34,7 +34,7 @@ public class Game {
             //Loop through all players each round
             for (int j = 0; j < myPlayers.length; j++) {
                 //if player is bankrupt, skip that player
-                if(myPlayers[j].Bankrupt)
+                if (myPlayers[j].Bankrupt)
                     continue;
 
 
@@ -65,7 +65,7 @@ public class Game {
 
                     case 3:
                         //Mate
-                        if(!MateAnimals(myPlayers[j])){
+                        if (!MateAnimals(myPlayers[j])) {
                             j--;
                             continue;
                         }
@@ -80,12 +80,12 @@ public class Game {
             }
             //Update at the end of each round
             Update();
-            System.out.println("Turn passed... (" + (i +1) + "/" + tempRoundCount + ")");
+            System.out.println("Turn passed... (" + (i + 1) + "/" + tempRoundCount + ")");
 
             //Check if a player has gone bankrupt
-            for(int j = 0; j < myPlayers.length; j++){
-                if(myPlayers[j].Money < 100 && myPlayers[j].Animals.size() == 0){
-                    System.out.println(myPlayers[j].Name +" has gone bankrupt...");
+            for (int j = 0; j < myPlayers.length; j++) {
+                if (myPlayers[j].Money < 100 && myPlayers[j].Animals.size() == 0) {
+                    System.out.println(myPlayers[j].Name + " has gone bankrupt...");
                     myPlayers[i].Bankrupt = true;
                 }
             }
@@ -93,60 +93,55 @@ public class Game {
         }
         System.out.println("The game has ended, all animals have been sold...");
         //Sell all animals
-        for(int i = 0; i < myPlayers.length; i++){
-            for(int j = 0; j<myPlayers[i].Animals.size(); j++){
+        for (int i = 0; i < myPlayers.length; i++) {
+            for (int j = 0; j < myPlayers[i].Animals.size(); j++) {
                 myPlayers[i].Money += myPlayers[i].Animals.get(j).GetValue();
             }
         }
         System.out.print("The winner is");
         //Add suspense by waiting 1 second between each dot
-        for(int i = 0; i < 3; i++){
+        for (int i = 0; i < 3; i++) {
             System.out.print(".");
-            try
-            {
+            try {
                 //Pause current thread for 1000 milliseconds
                 Thread.sleep(1000);
             }
             //To use Thread.Sleep you have to catch InterruptedException
-            catch(InterruptedException ex)
-            {
+            catch (InterruptedException ex) {
                 Thread.currentThread().interrupt();
             }
         }
         //Determine winner
         int tempWinner = -1;
         int tempHighestSum = 0;
-        for(int i = 0; i < myPlayers.length; i++){
-            if(myPlayers[i].Money > tempHighestSum){
+        for (int i = 0; i < myPlayers.length; i++) {
+            if (myPlayers[i].Money > tempHighestSum) {
                 tempWinner = i;
                 tempHighestSum = myPlayers[i].Money;
             }
         }
         //Display winner
-        System.out.println(myPlayers[tempWinner].Name + " with " + myPlayers[tempWinner].Money + "Schmeckles!");
+        System.out.println(myPlayers[tempWinner].Name + " with " + myPlayers[tempWinner].Money + " Schmeckles!");
         System.out.println("Congratulations!!");
 
         //print the rest of the player's money
-        for(int i = 0; i < myPlayers.length; i++){
-            if(i == tempWinner)
-            {
+        for (int i = 0; i < myPlayers.length; i++) {
+            if (i == tempWinner) {
                 continue;
             }
             System.out.println(myPlayers[i].Name + " money: " + myPlayers[i].Money);
         }
-
-
     }
 
     boolean MateAnimals(Player aPlayer) {
-        while(true){
+        while (true) {
             //Get first animal
             aPlayer.DisplayAnimalsIndexed();
             System.out.println("[" + (aPlayer.Animals.size() + 1) + "]" + "Back");
             System.out.print("Choose the first animal:");
 
             //Get an answer between the bounds
-            int tempAnswer = Utility.GetIntBetween(1, aPlayer.Animals.size() +1) - 1;
+            int tempAnswer = Utility.GetIntBetween(1, aPlayer.Animals.size() + 1) - 1;
             //Check if "Back" was selected
             if (tempAnswer == aPlayer.Animals.size())
                 return false; //return false to let the player choose a different option
@@ -156,7 +151,7 @@ public class Game {
             //Get second animal
             System.out.print("Choose the second animal:");
             //Get an answer between the bounds
-            tempAnswer = Utility.GetIntBetween(1, aPlayer.Animals.size() +1) - 1;
+            tempAnswer = Utility.GetIntBetween(1, aPlayer.Animals.size() + 1) - 1;
             //Check if "Back" was selected
             if (tempAnswer == aPlayer.Animals.size())
                 return false;
@@ -164,7 +159,7 @@ public class Game {
             Animal tempAnimal2 = aPlayer.Animals.get(tempAnswer);
 
             //If the two chosen animals cant mate, also covers the case when you have chosen the same animal 2 times since gender will be the same
-            if (tempAnimal1.myGender == tempAnimal2.myGender|| tempAnimal1.getClass() != tempAnimal2.getClass()) {
+            if (tempAnimal1.myGender == tempAnimal2.myGender || tempAnimal1.getClass() != tempAnimal2.getClass()) {
                 System.out.println("Cannot mate these...");
             } else { // if the two animals can mate
                 //50% chance, flips a coin, if correct side is rolled add a new animal of the type of the ones bred
@@ -185,7 +180,7 @@ public class Game {
 
     void FeedAnimals(Player aPlayer) {
         //Loop forever
-        while(true){
+        while (true) {
             //Display owned food
             aPlayer.DisplayFood();
             System.out.println("Which animal do you want to feed?");
@@ -195,7 +190,7 @@ public class Game {
             System.out.println("[" + (aPlayer.Animals.size() + 1) + "]" + "Done");
 
             //Get an answer between the bounds
-            int tempAnswer = Utility.GetIntBetween(1, aPlayer.Animals.size() +1) - 1;
+            int tempAnswer = Utility.GetIntBetween(1, aPlayer.Animals.size() + 1) - 1;
             //Check if "Done" was selected
             if (tempAnswer == aPlayer.Animals.size())
                 return;
@@ -204,11 +199,11 @@ public class Game {
             System.out.println("What do you want to feed " + tempAnimal.myName);
 
             //Print allowed food type options
-            for (int i = 0 ; i < tempAnimal.FoodTypes.length; i++){
-                System.out.println("[" +(i+1) + "]" + tempAnimal.FoodTypes[i].toString() + "(you have " + aPlayer.Food[tempAnimal.FoodTypes[i].getValue()] + "Kg)");
+            for (int i = 0; i < tempAnimal.FoodTypes.length; i++) {
+                System.out.println("[" + (i + 1) + "]" + tempAnimal.FoodTypes[i].toString() + "(you have " + aPlayer.Food[tempAnimal.FoodTypes[i].getValue()] + "Kg)");
             }
             //Get an answer between the bounds
-            tempAnswer = Utility.GetIntBetween(1, tempAnimal.FoodTypes.length +1) - 1;
+            tempAnswer = Utility.GetIntBetween(1, tempAnimal.FoodTypes.length + 1) - 1;
             //save the food type in a variable
             FoodType tempFoodType = tempAnimal.FoodTypes[tempAnswer];
 
@@ -216,12 +211,12 @@ public class Game {
             System.out.println("How many Kg of " + tempFoodType.toString() + " do you want to feed " + tempAnimal.myName + "?");
             System.out.println("You have " + aPlayer.Food[tempFoodType.getValue()] + " Kg of this food type.");
             //Get an answer
-            tempAnswer = Utility.GetIntBetween(0,aPlayer.Food[tempFoodType.getValue()]);
+            tempAnswer = Utility.GetIntBetween(0, aPlayer.Food[tempFoodType.getValue()]);
 
             //Display effect
             tempAnimal.myHealth += tempAnswer * 10;
             //make sure the animal cant have more than 100% health
-            if(tempAnimal.myHealth >100)
+            if (tempAnimal.myHealth > 100)
                 tempAnimal.myHealth = 100;
 
             System.out.println("You fed " + tempAnimal.myName + " " + tempAnswer + "Kg of " + tempFoodType.toString() + "(+" + (tempAnswer * 10) + "% health)");
@@ -234,8 +229,8 @@ public class Game {
     void Update() {
         //loop through all players and update all animals the player owns
         for (int i = 0; i < myPlayers.length; i++) {
-            System.out.println(myPlayers[i].Name +":");
-            for (int j = 0; j < myPlayers[i].Animals.size(); j++) {
+            System.out.println(myPlayers[i].Name + ":");
+            for (int j = myPlayers[i].Animals.size()-1; j > 0; j--) {
                 //If the animal dies, print what animal died
                 if (myPlayers[i].Animals.get(j).Update(myPlayers[i])) {
                     System.out.println(myPlayers[i].Name + "'s" + myPlayers[i].Animals.get(j).getClass().getSimpleName() + "\"" + myPlayers[i].Animals.get(j).myName + "\" died...");
