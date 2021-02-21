@@ -10,5 +10,6 @@ public class Chicken extends Animal{
         myMaxAge = 10;
         BabyCount = 4;
         FoodTypes = new FoodType[]{FoodType.Seeds, FoodType.Carrots};
+        VetCost = 40;
     }
 }

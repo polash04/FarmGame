@@ -3,7 +3,7 @@ package com.company;
 import java.util.*;
 
 public class Player {
-    int Money = 5000;
+    int Money = 2500;
     List<Animal> Animals = new ArrayList<Animal>();
     public int[] Food = new int[3];
     public boolean Bankrupt = false;

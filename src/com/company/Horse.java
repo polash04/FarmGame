@@ -8,5 +8,6 @@ public class Horse extends Animal{
         myMaxAge = 18;
         BabyCount = 1;
         FoodTypes = new FoodType[]{FoodType.Silage, FoodType.Carrots};
+        VetCost = 100;
     }
 }

@@ -16,8 +16,10 @@ public abstract class Animal {
     public int myMaxAge;
     public int myCost = 0;
     public int BabyCount = 1;
+    public int VetCost = 10;
     Gender myGender;
     public FoodType[] FoodTypes;
+    boolean SickFlag = false;
 
     public Animal(boolean aBabyFlag) {
         Scanner tempScan = new Scanner(System.in);
@@ -93,17 +95,25 @@ public abstract class Animal {
     }
 
     public boolean Update(Player aPlayer) {
+        //Decrease animal health
         int tempHealthDecrease = Game.Rng.nextInt(31 - 10) + 10;
         myHealth -= tempHealthDecrease; // 31 is max bound 10 is lower bound
         System.out.println("    " + myName + " lost " + tempHealthDecrease + "% health");
 
         myAge++;
         //if age is above max age remove the animal from the player
-        if (myAge > myMaxAge) {
+        if (myAge > myMaxAge || SickFlag) {
             aPlayer.Animals.remove(this);
             System.out.println("    " + myName + " Died...");
             return true;
         }
+
+        //20% risk of becoming sick
+        if(Game.Rng.nextInt(5) == 0){
+            SickFlag = true;
+            System.out.println("    " + myName + " has become sick...");
+        }
+
         return false;
 
     }
