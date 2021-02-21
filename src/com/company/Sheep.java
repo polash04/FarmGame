@@ -9,6 +9,5 @@ public class Sheep extends Animal{
         myMaxAge = 15;
         BabyCount = 2;
         FoodTypes =  new FoodType[]{FoodType.Silage, FoodType.Seeds};
-        VetCost = 90;
     }
 }

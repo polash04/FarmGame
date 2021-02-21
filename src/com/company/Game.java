@@ -5,6 +5,7 @@ import jdk.jshell.execution.Util;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class Game {
@@ -20,9 +21,12 @@ public class Game {
         System.out.print("How many Players? (1-4)");
         myPlayers = new Player[Utility.GetIntBetween(1, 4)];
 
+        Scanner tempScan = new Scanner(System.in);
         //Create the players
         for (int i = 0; i < myPlayers.length; i++) {
             myPlayers[i] = new Player();
+            System.out.print("Please choose a name:");
+            myPlayers[i].Name = tempScan.next();
         }
 
         //Loop [number of rounds] times
@@ -40,33 +44,6 @@ public class Game {
 
                 //Display the current player's info
                 myPlayers[j].DisplayInfo();
-
-                //Checks each animal if it is sick, if it is, prompt the player to pay the veterinary cost
-                for(int k = 0; k < myPlayers[j].Animals.size(); k++){
-                    if(myPlayers[j].Animals.get(k).SickFlag){
-                        System.out.println(myPlayers[j].Animals.get(k).myName + " needs medical attention, without it " + myPlayers[j].Animals.get(k).myName + " will surely die...");
-                        System.out.println("Pay the veterinarian cost of " + myPlayers[j].Animals.get(k).VetCost + "?");
-                        switch(Utility.GiveOptions("Yes (50% cure chance)" , "no")) {
-                            case 0:
-                                if(Rng.nextInt(2) == 0){
-                                    myPlayers[j].Animals.get(k).SickFlag = false;
-                                    System.out.println("The veterinary managed to cure " + myPlayers[i].Animals.get(k).myName + "!");
-                                }
-                                else{
-                                    //remove the animal from the player
-                                    myPlayers[i].Animals.remove(k);
-                                    System.out.println("The veterinary tried her best but couldn't save " + myPlayers[i].Animals.get(k).myName + ".");
-                                    System.out.println(myPlayers[i].Animals.get(k).myName + " Died...");
-                                }
-                                break;
-                            case 1:
-                                //remove the animal from the player
-                                myPlayers[i].Animals.remove(k);
-                                System.out.println(myPlayers[i].Animals.get(k).myName + " Died...");
-                                break;
-                        }
-                    }
-                }
 
                 //Prompts the player to choose what they want to do
                 System.out.println("What do you want to do?");
