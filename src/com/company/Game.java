@@ -40,7 +40,7 @@ public class Game {
 
 
                 //Print which player is playing right now
-                System.out.println("Player " + (j + 1) + ":");
+                System.out.println(myPlayers[j].Name + ":");
 
                 //Display the current player's info
                 myPlayers[j].DisplayInfo();
@@ -86,7 +86,7 @@ public class Game {
             //Check if a player has gone bankrupt
             for(int j = 0; j < myPlayers.length; j++){
                 if(myPlayers[j].Money < 100 && myPlayers[j].Animals.size() == 0){
-                    System.out.println("Player " + (j+1) + " has gone bankrupt...");
+                    System.out.println(myPlayers[j].Name +" has gone bankrupt...");
                     myPlayers[i].Bankrupt = true;
                 }
             }
@@ -124,7 +124,7 @@ public class Game {
             }
         }
         //Display winner
-        System.out.println("Player " + (tempWinner + 1) + " with " + myPlayers[tempWinner].Money + "Schmeckles!");
+        System.out.println(myPlayers[tempWinner].Name + (tempWinner + 1) + " with " + myPlayers[tempWinner].Money + "Schmeckles!");
         System.out.println("Congratulations!!");
 
         //print the rest of the player's money
@@ -133,7 +133,7 @@ public class Game {
             {
                 continue;
             }
-            System.out.println("Player " + (i+1) + " money: " + myPlayers[i].Money);
+            System.out.println(myPlayers[i].Name + " money: " + myPlayers[i].Money);
         }
 
 
@@ -235,11 +235,11 @@ public class Game {
     void Update() {
         //loop through all players and update all animals the player owns
         for (int i = 0; i < myPlayers.length; i++) {
-            System.out.println("Player " + (i+1) + ":");
+            System.out.println(myPlayers[i].Name +":");
             for (int j = 0; j < myPlayers[i].Animals.size(); j++) {
                 //If the animal dies, print what animal died
                 if (myPlayers[i].Animals.get(j).Update(myPlayers[i])) {
-                    System.out.println("Player " + i + "'s" + myPlayers[i].Animals.get(j).getClass().getSimpleName() + "\"" + myPlayers[i].Animals.get(j).myName + "\" died...");
+                    System.out.println(myPlayers[i].Name + "'s" + myPlayers[i].Animals.get(j).getClass().getSimpleName() + "\"" + myPlayers[i].Animals.get(j).myName + "\" died...");
                 }
             }
         }
